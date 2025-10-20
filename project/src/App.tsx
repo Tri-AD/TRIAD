@@ -1,52 +1,45 @@
 import React, { useEffect, useRef, useState } from "react";
+import { motion, AnimatePresence, easeOut } from "framer-motion";
+import emailjs from "@emailjs/browser";
+import {
+  CheckCircle,
+  Phone,
+  Mail,
+  Zap,
+  Layers,
+  Sparkles,
+  Cuboid as Cube,
+  Download,
+  MapPin,
+  DollarSign,
+  MessageSquare,
+  Send
+} from "lucide-react";
+import { ArrowRight } from "lucide-react";
+// Animation Variants (ensure these are defined)
+
 import {
   Menu,
   X,
   Video,
-  Code,
-  Palette,
-  Zap,
-  Award,
-  Users,
-  Star,
-  ArrowRight,
-  CheckCircle,
-  Link as LinkIcon,
-  Play,
-  Download,
-  ExternalLink,
-  Cuboid as Cube,
-  Sparkles,
-  Layers,
-  Send,
-  Mail,
-  Phone,
-  MapPin,
-  DollarSign,
-  MessageSquare,
-} from "lucide-react";
-import { motion, AnimatePresence } from "framer-motion";
-import emailjs from "@emailjs/browser";
-
-// Animation Variants
+  Palette
+} from "lucide-react"; // Importing icons from lucide-react
+// Animation variants using Framer Motion's imported easeOut
 const fadeInUp = {
   hidden: { opacity: 0, y: 40 },
-  visible: { opacity: 1, y: 0, transition: { duration: 0.6, ease: "easeOut" } },
+  visible: { opacity: 1, y: 0, transition: { duration: 0.6, ease: easeOut } },
 };
-
 const fadeIn = {
   hidden: { opacity: 0 },
-  visible: { opacity: 1, transition: { duration: 0.8, ease: "easeOut" } },
+  visible: { opacity: 1, transition: { duration: 0.8, ease: easeOut } },
 };
-
 const scaleUp = {
   hidden: { opacity: 0, scale: 0.94 },
-  visible: { opacity: 1, scale: 1, transition: { duration: 0.5, ease: "easeOut" } },
+  visible: { opacity: 1, scale: 1, transition: { duration: 0.5, ease: easeOut } },
 };
-
 const slideIn = {
   hidden: { opacity: 0, x: -50 },
-  visible: { opacity: 1, x: 0, transition: { duration: 0.6, ease: "easeOut" } },
+  visible: { opacity: 1, x: 0, transition: { duration: 0.6, ease: easeOut } },
 };
 
 // Build WhatsApp link from env or placeholder number
@@ -291,56 +284,53 @@ TRIAD Contact Form
   ];
 
   // Placeholder portfolio cards (you'll swap href with YouTube links later)
-  const portfolioPlaceholders = [
+  // Portfolio sections and videos
+  const portfolioSections = [
     {
-      id: 1,
-      title: "Edit Reel — Dynamic Cuts",
-      thumb:
-        "https://images.pexels.com/photos/799115/pexels-photo-799115.jpeg?auto=compress&cs=tinysrgb&w=800",
-      href: "#", // replace with https://youtube.com/...
-      tags: ["Cinematic", "Sound Design", "Motion"],
+      section: "Anime",
+      videos: [
+        {
+          id: 1,
+          title: "AI Animation Prompt — Featured Edit",
+          youtubeId: "W4n5a7uJGxY",
+          tags: ["AI", "Animation", "Prompt"],
+        },
+        {
+          id: 2,
+          title: "Anime — YouTube Video 2",
+          youtubeId: "VlEwINYWzcE",
+          tags: ["Anime", "Animation"],
+        },
+      ],
     },
     {
-      id: 2,
-      title: "Anime AMV — Impact",
-      thumb:
-        "https://images.pexels.com/photos/633409/pexels-photo-633409.jpeg?auto=compress&cs=tinysrgb&w=800",
-      href: "#",
-      tags: ["Anime", "AMV", "Transitions"],
+      section: "Documentary",
+      videos: [
+        {
+          id: 2,
+          title: "Documentary — YouTube Video",
+          youtubeId: "qgVcQQU_gbg",
+          tags: ["Documentary", "Real", "Story"],
+        },
+        {
+          id: 3,
+          title: "Documentary — YouTube Video 2",
+          youtubeId: "3TEEBCLsQcI",
+          tags: ["Documentary", "Real", "Story"],
+        },
+      ],
     },
     {
-      id: 3,
-      title: "Gaming Montage — Clutch",
-      thumb:
-        "https://images.pexels.com/photos/907221/pexels-photo-907221.jpeg?auto=compress&cs=tinysrgb&w=800",
-      href: "#",
-      tags: ["Gaming", "VFX", "Sync"],
+      section: "Shorts",
+      videos: [],
     },
     {
-      id: 4,
-      title: "Shorts Pack — Viral Pace",
-      thumb:
-        "https://images.pexels.com/photos/1607696/pexels-photo-1607696.jpeg?auto=compress&cs=tinysrgb&w=800",
-      href: "#",
-      tags: ["Shorts", "Snappy", "Hooks"],
-    },
-    {
-      id: 5,
-      title: "Documentary Cut — Story First",
-      thumb:
-        "https://images.pexels.com/photos/337994/pexels-photo-337994.jpeg?auto=compress&cs=tinysrgb&w=800",
-      href: "#",
-      tags: ["Docu", "Narrative", "Color"],
-    },
-    {
-      id: 6,
-      title: "Brand Film — Identity",
-      thumb:
-        "https://images.pexels.com/photos/1050305/pexels-photo-1050305.jpeg?auto=compress&cs=tinysrgb&w=800",
-      href: "#",
-      tags: ["Brand", "Grade", "Sound"],
+      section: "Gaming",
+      videos: [],
     },
   ];
+
+
 
   // ——— Pages ———
   const renderHomePage = () => (
@@ -636,59 +626,78 @@ TRIAD Contact Form
             animate="visible"
             transition={{ delay: 0.25 }}
           >
-            Designed to match the vibe. Add your YouTube links later — cards are ready.
+            Explore our work by category. Each section features our best edits.
           </motion.p>
         </div>
       </section>
 
       <section className="py-16 px-4 sm:px-6 lg:px-8">
-        <div className="max-w-7xl mx-auto grid sm:grid-cols-2 lg:grid-cols-3 gap-8">
-          {portfolioPlaceholders.map((v, i) => (
-            <motion.div
-              key={v.id}
-              className="group bg-gray-900/50 border border-gray-800 rounded-2xl overflow-hidden hover:border-gray-700 transition-all duration-300"
-              variants={scaleUp}
-              initial="hidden"
-              whileInView="visible"
-              viewport={{ once: true }}
-              transition={{ delay: i * 0.08 }}
-              whileHover={{
-                scale: 1.02,
-                transition: { duration: 0.2 },
-              }}
-            >
-              <div className="relative">
-                <img
-                  src={v.thumb}
-                  alt={v.title}
-                  className="w-full h-48 object-cover"
-                />
-                <div className="absolute inset-0 bg-black/40 group-hover:bg-black/20 transition-all duration-300 flex items-center justify-center">
-                  <a
-                    href={v.href}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="bg-blue-600 hover:bg-blue-700 px-4 py-2 rounded-full text-white inline-flex items-center gap-2"
-                  >
-                    <Play size={18} />
-                    Watch on YouTube
-                  </a>
-                </div>
-              </div>
-              <div className="p-6">
-                <h3 className="text-lg font-bold mb-2">{v.title}</h3>
-                <div className="flex flex-wrap gap-2">
-                  {v.tags.map((t) => (
-                    <span
-                      key={t}
-                      className="text-xs bg-white/5 border border-white/10 rounded-full px-2 py-1 text-gray-300"
+        <div className="max-w-7xl mx-auto space-y-16">
+          {portfolioSections.map((section) => (
+            <div key={section.section}>
+              <h2 className="text-2xl md:text-3xl font-bold mb-8 text-left text-blue-400">{section.section}</h2>
+              {section.videos.length === 0 ? (
+                <p className="text-gray-400 italic mb-8">No videos yet in this section.</p>
+              ) : (
+                <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-8">
+                  {section.videos.map((v, i) => (
+                    <motion.div
+                      key={v.id}
+                      className="group bg-gray-900/50 border border-gray-800 rounded-2xl overflow-hidden hover:border-gray-700 transition-all duration-300"
+                      variants={scaleUp}
+                      initial="hidden"
+                      whileInView="visible"
+                      viewport={{ once: true }}
+                      transition={{ delay: i * 0.08 }}
+                      whileHover={{
+                        scale: 1.02,
+                        transition: { duration: 0.2 },
+                      }}
                     >
-                      {t}
-                    </span>
+                      <div className="relative">
+                        {"youtubeId" in v && v.youtubeId ? (
+                          <iframe
+                            width="100%"
+                            height="220"
+                            src={`https://www.youtube.com/embed/${v.youtubeId}`}
+                            title={v.title}
+                            frameBorder="0"
+                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                            allowFullScreen
+                            className="rounded-lg w-full"
+                          ></iframe>
+                        ) : "driveUrl" in v && v.driveUrl ? (
+                          <video
+                            width="100%"
+                            height="220"
+                            controls
+                            className="rounded-lg w-full"
+                          >
+                            {typeof v.driveUrl === "string" && v.driveUrl && (
+                              <source src={v.driveUrl} type="video/mp4" />
+                            )}
+                            Your browser does not support the video tag.
+                          </video>
+                        ) : null}
+                      </div>
+                      <div className="p-6">
+                        <h3 className="text-lg font-bold mb-2">{v.title}</h3>
+                        <div className="flex flex-wrap gap-2">
+                          {v.tags.map((t) => (
+                            <span
+                              key={t}
+                              className="text-xs bg-white/5 border border-white/10 rounded-full px-2 py-1 text-gray-300"
+                            >
+                              {t}
+                            </span>
+                          ))}
+                        </div>
+                      </div>
+                    </motion.div>
                   ))}
                 </div>
-              </div>
-            </motion.div>
+              )}
+            </div>
           ))}
         </div>
       </section>
