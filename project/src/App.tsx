@@ -249,37 +249,15 @@ TRIAD Contact Form
   // Assets page data (replace with real files in public/downloads/* if you have them)
   const assetPacks = [
     {
-      id: "cap",
-      icon: <Video className="text-blue-400" size={28} />,
-      title: "Cinematic Video Pack",
+      id: "tap",
+      icon: <Download className="text-purple-400" size={28} />,
+      title: "TRIAD Assets",
       description:
-        "Transitions, LUTs, SFX, overlays, and motion elements to speed up your edits.",
-      items: ["120+ transitions", "30 LUTs", "80 SFX", "20 overlays"],
-      size: "1.2 GB",
+        "Exclusive TRIAD assets including custom templates, effects, and tools for professional editing.",
+      items: ["Custom templates", "Exclusive effects", "Editing tools", "Brand assets"],
+      size: "TBD",
       version: "v1.0",
-      link: `${import.meta.env.BASE_URL}downloads/cinematic-video-pack.zip`,
-    },
-    {
-      id: "dap",
-      icon: <Palette className="text-cyan-400" size={28} />,
-      title: "Design Asset Pack",
-      description:
-        "Logos, brand kits, icons, gradients, and ready-to-use social post templates.",
-      items: ["40 logos", "12 brand kits", "300 icons", "60 gradients"],
-      size: "480 MB",
-      version: "v1.3",
-      link: `${import.meta.env.BASE_URL}downloads/design-asset-pack.zip`,
-    },
-    {
-      id: "map",
-      icon: <Zap className="text-yellow-400" size={28} />,
-      title: "Marketing Starter Pack",
-      description:
-        "Ad creatives, social templates, and campaign-ready assets for fast launches.",
-      items: ["90 ad creatives", "120 social templates", "14 campaign kits"],
-      size: "320 MB",
-      version: "v2.0",
-      link: `${import.meta.env.BASE_URL}downloads/marketing-starter-pack.zip`,
+      link: "https://drive.google.com/uc?export=download&id=1bE83kAK6lBpcrTo1xdCeaPEcCQuhboLX",
     },
   ];
 
