@@ -1,0 +1,8 @@
+- [ ] Remove "assets" from the currentPage state type
+- [ ] Remove assetsBgRef declaration
+- [ ] Remove assetsBgRef from videos array in useEffect
+- [ ] Remove the assets service description block from the about page
+- [ ] Remove the "Assets" button from the desktop navbar
+- [ ] Remove the "Assets" button from the mobile menu
+- [ ] Remove the assets page rendering from AnimatePresence
+- [ ] Remove unused Download import from lucide-react
