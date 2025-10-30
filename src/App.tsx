@@ -9,7 +9,6 @@ import {
   Layers,
   Sparkles,
   Cuboid as Cube,
-  Download,
   MapPin,
   DollarSign,
   MessageSquare,
@@ -24,6 +23,7 @@ import {
   Video,
   Palette
 } from "lucide-react"; // Importing icons from lucide-react
+
 // Animation variants using Framer Motion's imported easeOut
 const fadeInUp = {
   hidden: { opacity: 0, y: 40 },
@@ -124,7 +124,7 @@ function ConfirmationModal({
 function App() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [currentPage, setCurrentPage] = useState<
-    "home" | "portfolio" | "assets" | "about" | "hire"
+    "home" | "portfolio" | "about" | "hire"
   >("home");
   const [formData, setFormData] = useState({
     email: "",
@@ -140,14 +140,12 @@ function App() {
   // Force autoplay for background videos
   const heroBgRef = useRef<HTMLVideoElement | null>(null);
   const aboutBgRef = useRef<HTMLVideoElement | null>(null);
-  const assetsBgRef = useRef<HTMLVideoElement | null>(null);
   const hireBgRef = useRef<HTMLVideoElement | null>(null);
 
   useEffect(() => {
     const videos = [
       heroBgRef.current,
       aboutBgRef.current,
-      assetsBgRef.current,
       hireBgRef.current,
     ];
     videos.forEach((v) => {
@@ -246,43 +244,6 @@ TRIAD Contact Form
     });
   };
 
-  // Assets page data (replace with real files in public/downloads/* if you have them)
-  const assetPacks = [
-    {
-      id: "cap",
-      icon: <Video className="text-blue-400" size={28} />,
-      title: "Cinematic Video Pack",
-      description:
-        "Transitions, LUTs, SFX, overlays, and motion elements to speed up your edits.",
-      items: ["120+ transitions", "30 LUTs", "80 SFX", "20 overlays"],
-      size: "1.2 GB",
-      version: "v1.0",
-      link: `${import.meta.env.BASE_URL}downloads/cinematic-video-pack.zip`,
-    },
-    {
-      id: "dap",
-      icon: <Palette className="text-cyan-400" size={28} />,
-      title: "Design Asset Pack",
-      description:
-        "Logos, brand kits, icons, gradients, and ready-to-use social post templates.",
-      items: ["40 logos", "12 brand kits", "300 icons", "60 gradients"],
-      size: "480 MB",
-      version: "v1.3",
-      link: `${import.meta.env.BASE_URL}downloads/design-asset-pack.zip`,
-    },
-    {
-      id: "map",
-      icon: <Zap className="text-yellow-400" size={28} />,
-      title: "Marketing Starter Pack",
-      description:
-        "Ad creatives, social templates, and campaign-ready assets for fast launches.",
-      items: ["90 ad creatives", "120 social templates", "14 campaign kits"],
-      size: "320 MB",
-      version: "v2.0",
-      link: `${import.meta.env.BASE_URL}downloads/marketing-starter-pack.zip`,
-    },
-  ];
-
   // Placeholder portfolio cards (you'll swap href with YouTube links later)
   // Portfolio sections and videos
   const portfolioSections = [
@@ -329,8 +290,6 @@ TRIAD Contact Form
       videos: [],
     },
   ];
-
-
 
   // ——— Pages ———
   const renderHomePage = () => (
@@ -699,112 +658,6 @@ TRIAD Contact Form
               )}
             </div>
           ))}
-        </div>
-      </section>
-    </div>
-  );
-
-  const renderAssetsPage = () => (
-    <div className="min-h-screen pt-20">
-      {/* Hero */}
-      <section className="relative py-20 px-4 sm:px-6 lg:px-8 overflow-hidden">
-        {/* Background Video */}
-        <video
-          ref={assetsBgRef}
-          className="absolute inset-0 w-full h-full object-cover pointer-events-none select-none"
-          autoPlay
-          muted
-          loop
-          playsInline
-          preload="auto"
-        >
-          <source
-            src={`${import.meta.env.BASE_URL}background.webm`}
-            type="video/webm"
-          />
-          <source
-            src={`${import.meta.env.BASE_URL}background.mp4`}
-            type="video/mp4"
-          />
-        </video>
-
-        {/* Dark overlay */}
-        <div className="absolute inset-0 bg-black/70" />
-
-        <div className="max-w-7xl mx-auto text-center">
-          <motion.h1
-            className="relative z-10 text-5xl md:text-6xl font-bold mb-6"
-            variants={fadeInUp}
-            initial="hidden"
-            animate="visible"
-          >
-            <span className="bg-gradient-to-r from-blue-400 via-purple-400 to-cyan-400 bg-clip-text text-transparent">
-              TRIAD Assets
-            </span>
-          </motion.h1>
-          <motion.p
-            className="relative z-10 text-xl text-gray-300 max-w-3xl mx-auto"
-            variants={fadeIn}
-            initial="hidden"
-            animate="visible"
-            transition={{ delay: 0.2 }}
-          >
-            Download-ready packs and templates with the same sleek style and smooth motion.
-          </motion.p>
-        </div>
-      </section>
-
-      {/* Assets */}
-      <section className="py-16 px-4 sm:px-6 lg:px-8">
-        <div className="max-w-7xl mx-auto">
-          <motion.h2
-            className="text-3xl md:text-4xl font-bold mb-8"
-            variants={fadeInUp}
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true }}
-          >
-            Packs
-          </motion.h2>
-
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {assetPacks.map((pack, i) => (
-              <motion.div
-                key={pack.id}
-                className="bg-gray-900/50 border border-gray-800 rounded-2xl p-6 hover:border-gray-700 transition-all duration-300"
-                variants={scaleUp}
-                initial="hidden"
-                whileInView="visible"
-                viewport={{ once: true }}
-                transition={{ delay: i * 0.1 }}
-                whileHover={{ scale: 1.02, transition: { duration: 0.2 } }}
-              >
-                <div className="flex items-center gap-3 mb-4">
-                  {pack.icon}
-                  <h3 className="text-xl font-bold">{pack.title}</h3>
-                </div>
-                <p className="text-gray-300 text-sm mb-4">{pack.description}</p>
-                <ul className="text-gray-400 text-sm space-y-2 mb-5">
-                  {pack.items.map((it, idx) => (
-                    <li key={idx} className="flex items-center gap-2">
-                      <CheckCircle className="text-green-400" size={16} /> {it}
-                    </li>
-                  ))}
-                </ul>
-                <div className="flex items-center justify-between text-xs text-gray-400 mb-4">
-                  <span>Size: {pack.size}</span>
-                  <span>Version: {pack.version}</span>
-                </div>
-                <a
-                  href={pack.link}
-                  download
-                  className="w-full inline-flex items-center justify-center gap-2 bg-blue-600 hover:bg-blue-700 px-4 py-2 rounded-full text-white transition-all duration-300"
-                >
-                  <Download size={18} /> Download
-                </a>
-              </motion.div>
-            ))}
-          </div>
         </div>
       </section>
     </div>
@@ -1250,38 +1103,30 @@ TRIAD Contact Form
             <span className="text-xl font-bold">TRIAD</span>
           </motion.button>
 
-          {/* Right-side nav: Portfolio, Assets, About, Hire Us */}
+          {/* Right-side nav: Portfolio, About, Hire Us */}
           <div className="hidden md:flex">
             <div className="flex items-center gap-6 rounded-full px-5 py-2">
               <button
                 onClick={() => setCurrentPage("home")}
-                className={`text-gray-300 hover:text-white px-2 py-1 transition-all duration-300 ${
-                  currentPage === "home" ? "text-white" : ""
-                }`}
+                className={`text-gray-300 hover:text-white px-2 py-1 transition-all duration-300 ${currentPage === "home" ? "text-white" : ""
+                  }`}
               >
                 Home
               </button>
               <button
                 onClick={() => setCurrentPage("portfolio")}
-                className={`text-gray-300 hover:text-white px-2 py-1 transition-all duration-300 ${
-                  currentPage === "portfolio" ? "text-white" : ""
-                }`}
+                className={`text-gray-300 hover:text-white px-2 py-1 transition-all duration-300 ${currentPage === "portfolio" ? "text-white" : ""
+                  }`}
               >
                 Portfolio
               </button>
-              <button
-                onClick={() => setCurrentPage("assets")}
-                className={`text-gray-300 hover:text-white px-2 py-1 transition-all duration-300 ${
-                  currentPage === "assets" ? "text-white" : ""
-                }`}
-              >
-                Assets
-              </button>
+
+
+
               <button
                 onClick={() => setCurrentPage("about")}
-                className={`text-gray-300 hover:text-white px-2 py-1 transition-all duration-300 ${
-                  currentPage === "about" ? "text-white" : ""
-                }`}
+                className={`text-gray-300 hover:text-white px-2 py-1 transition-all duration-300 ${currentPage === "about" ? "text-white" : ""
+                  }`}
               >
                 About
               </button>
@@ -1314,9 +1159,8 @@ TRIAD Contact Form
                 setCurrentPage("home");
                 setIsMenuOpen(false);
               }}
-              className={`block w-full text-left px-3 py-2 rounded-lg hover:bg-white/10 ${
-                currentPage === "home" ? "text-white" : "text-gray-300"
-              }`}
+              className={`block w-full text-left px-3 py-2 rounded-lg hover:bg-white/10 ${currentPage === "home" ? "text-white" : "text-gray-300"
+                }`}
             >
               Home
             </button>
@@ -1325,31 +1169,19 @@ TRIAD Contact Form
                 setCurrentPage("portfolio");
                 setIsMenuOpen(false);
               }}
-              className={`block w-full text-left px-3 py-2 rounded-lg hover:bg-white/10 ${
-                currentPage === "portfolio" ? "text-white" : "text-gray-300"
-              }`}
+              className={`block w-full text-left px-3 py-2 rounded-lg hover:bg-white/10 ${currentPage === "portfolio" ? "text-white" : "text-gray-300"
+                }`}
             >
               Portfolio
             </button>
-            <button
-              onClick={() => {
-                setCurrentPage("assets");
-                setIsMenuOpen(false);
-              }}
-              className={`block w-full text-left px-3 py-2 rounded-lg hover:bg-white/10 ${
-                currentPage === "assets" ? "text-white" : "text-gray-300"
-              }`}
-            >
-              Assets
-            </button>
+
             <button
               onClick={() => {
                 setCurrentPage("about");
                 setIsMenuOpen(false);
               }}
-              className={`block w-full text-left px-3 py-2 rounded-lg hover:bg-white/10 ${
-                currentPage === "about" ? "text-white" : "text-gray-300"
-              }`}
+              className={`block w-full text-left px-3 py-2 rounded-lg hover:bg-white/10 ${currentPage === "about" ? "text-white" : "text-gray-300"
+                }`}
             >
               About
             </button>
@@ -1404,24 +1236,7 @@ TRIAD Contact Form
             {renderPortfolioPage()}
           </motion.div>
         )}
-        {currentPage === "assets" && (
-          <motion.div
-            key="assets"
-            initial={{ opacity: 0, y: 12 }}
-            animate={{
-              opacity: 1,
-              y: 0,
-              transition: { duration: 0.35, ease: "easeOut" },
-            }}
-            exit={{
-              opacity: 0,
-              y: -12,
-              transition: { duration: 0.25, ease: "easeIn" },
-            }}
-          >
-            {renderAssetsPage()}
-          </motion.div>
-        )}
+
         {currentPage === "about" && (
           <motion.div
             key="about"
