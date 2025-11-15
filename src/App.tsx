@@ -15,14 +15,12 @@ import {
   Send
 } from "lucide-react";
 import { ArrowRight } from "lucide-react";
-// Animation Variants (ensure these are defined)
-
 import {
   Menu,
   X,
   Video,
   Palette
-} from "lucide-react"; // Importing icons from lucide-react
+} from "lucide-react";
 
 // Animation variants using Framer Motion's imported easeOut
 const fadeInUp = {
@@ -54,69 +52,69 @@ function ConfirmationModal({
   open: boolean;
   onClose: () => void;
 }) {
-  if (!open) return null;
-
   return (
     <AnimatePresence>
-      <motion.div
-        className="fixed inset-0 z-[60] flex items-center justify-center"
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        exit={{ opacity: 0 }}
-      >
-        <div className="absolute inset-0 bg-black/70" onClick={onClose} />
+      {open && (
         <motion.div
-          className="relative z-10 max-w-md w-[92%] bg-gray-900 border border-gray-800 rounded-2xl p-6 text-center"
-          initial={{ scale: 0.95, opacity: 0, y: 12 }}
-          animate={{ scale: 1, opacity: 1, y: 0 }}
-          exit={{ scale: 0.95, opacity: 0, y: 12 }}
+          className="fixed inset-0 z-[60] flex items-center justify-center"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
         >
-          <div className="mx-auto mb-3 w-12 h-12 rounded-full bg-green-500/10 flex items-center justify-center">
-            <CheckCircle className="text-green-400" />
-          </div>
-          <h3 className="text-xl font-semibold mb-2">Details Sent Successfully!</h3>
-          <p className="text-gray-300 text-sm mb-4">
-            Your details have been sent. You'll be contacted within 24 hours via Email, WhatsApp, and Discord (if provided).
-          </p>
-
-          <div className="flex gap-3 justify-center flex-wrap">
-            <a
-              href={WHATSAPP_LINK}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 px-3 py-2 rounded-full bg-emerald-600/20 text-emerald-300 hover:bg-emerald-600/30"
-            >
-              <Phone size={14} />
-              WhatsApp
-            </a>
-            <a
-              href="https://discord.gg/auJHCKZ2"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 px-3 py-2 rounded-full bg-indigo-600/20 text-indigo-300 hover:bg-indigo-600/30"
-            >
-              <div className="w-4 h-4 bg-[#5865F2] rounded text-[10px] font-bold text-white flex items-center justify-center">
-                D
-              </div>
-              Discord
-            </a>
-            <a
-              href="mailto:studiossenpai07@gmail.com"
-              className="inline-flex items-center gap-2 px-3 py-2 rounded-full bg-red-600/20 text-red-300 hover:bg-red-600/30"
-            >
-              <Mail size={14} />
-              Email
-            </a>
-          </div>
-
-          <button
-            onClick={onClose}
-            className="mt-6 w-full bg-blue-600 hover:bg-blue-700 text-white rounded-lg py-2.5"
+          <div className="absolute inset-0 bg-black/70" onClick={onClose} />
+          <motion.div
+            className="relative z-10 max-w-md w-[92%] bg-gray-900 border border-gray-800 rounded-2xl p-6 text-center"
+            initial={{ scale: 0.95, opacity: 0, y: 12 }}
+            animate={{ scale: 1, opacity: 1, y: 0 }}
+            exit={{ scale: 0.95, opacity: 0, y: 12 }}
           >
-            Close
-          </button>
+            <div className="mx-auto mb-3 w-12 h-12 rounded-full bg-green-500/10 flex items-center justify-center">
+              <CheckCircle className="text-green-400" />
+            </div>
+            <h3 className="text-xl font-semibold mb-2">Details Sent Successfully!</h3>
+            <p className="text-gray-300 text-sm mb-4">
+              Your details have been sent. You'll be contacted within 24 hours via Email, WhatsApp, and Discord (if provided).
+            </p>
+
+            <div className="flex gap-3 justify-center flex-wrap">
+              <a
+                href={WHATSAPP_LINK}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-2 px-3 py-2 rounded-full bg-emerald-600/20 text-emerald-300 hover:bg-emerald-600/30"
+              >
+                <Phone size={14} />
+                WhatsApp
+              </a>
+              <a
+                href="https://discord.gg/auJHCKZ2"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-2 px-3 py-2 rounded-full bg-indigo-600/20 text-indigo-300 hover:bg-indigo-600/30"
+              >
+                <div className="w-4 h-4 bg-[#5865F2] rounded text-[10px] font-bold text-white flex items-center justify-center">
+                  D
+                </div>
+                Discord
+              </a>
+              <a
+                href="mailto:studiossenpai07@gmail.com"
+                className="inline-flex items-center gap-2 px-3 py-2 rounded-full bg-red-600/20 text-red-300 hover:bg-red-600/30"
+              >
+                <Mail size={14} />
+                Email
+              </a>
+            </div>
+
+            <button
+              onClick={onClose}
+              className="mt-6 w-full bg-blue-600 hover:bg-blue-700 text-white rounded-lg py-2.5"
+            >
+              Close
+            </button>
+          </motion.div>
         </motion.div>
-      </motion.div>
+      )}
     </AnimatePresence>
   );
 }
@@ -135,21 +133,24 @@ function App() {
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitMessage, setSubmitMessage] = useState("");
-  const [isModalOpen, setIsModalOpen] = useState(false); // added
+  const [submitState, setSubmitState] = useState<"idle" | "success" | "error">("idle");
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   // Force autoplay for background videos
   const heroBgRef = useRef<HTMLVideoElement | null>(null);
   const aboutBgRef = useRef<HTMLVideoElement | null>(null);
   const hireBgRef = useRef<HTMLVideoElement | null>(null);
+  const portfolioBgRef = useRef<HTMLVideoElement | null>(null);
 
   useEffect(() => {
     const videos = [
       heroBgRef.current,
       aboutBgRef.current,
       hireBgRef.current,
-    ];
+      portfolioBgRef.current,
+    ].filter(Boolean) as HTMLVideoElement[];
+
     videos.forEach((v) => {
-      if (!v) return;
       v.muted = true; // must be muted for autoplay
       v.preload = "metadata"; // Optimize loading
       v.setAttribute("playsinline", "true");
@@ -161,13 +162,14 @@ function App() {
         });
       }
     });
-  }, []);
+  }, [currentPage]);
 
   // Handle form submission (EmailJS + fallback)
   const handleFormSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsSubmitting(true);
     setSubmitMessage("");
+    setSubmitState("idle");
 
     try {
       const templateParams = {
@@ -178,9 +180,9 @@ function App() {
         user_discord_id: formData.discordId || "Not provided",
         sent_at: new Date().toLocaleString(),
         // Add template-friendly fields used in your EmailJS template
-        name: formData.email || 'No name',
+        name: formData.email || "No name",
         time: new Date().toLocaleString(),
-        message: `Email: ${formData.email}\nPhone: ${formData.phone || 'Not provided'}\nCountry: ${formData.country}\nBudget: ${formData.budget}\nDiscord ID: ${formData.discordId || 'Not provided'}`,
+        message: `Email: ${formData.email}\nPhone: ${formData.phone || "Not provided"}\nCountry: ${formData.country}\nBudget: ${formData.budget}\nDiscord ID: ${formData.discordId || "Not provided"}`,
       };
 
       await emailjs.send(
@@ -192,6 +194,7 @@ function App() {
 
       setIsModalOpen(true);
       setSubmitMessage("Message sent! We'll reach out within 24 hours.");
+      setSubmitState("success");
       setFormData({
         email: "",
         phone: "",
@@ -203,9 +206,7 @@ function App() {
       console.error("EmailJS error:", error);
       try {
         // Fallback to mailto
-        const subject = encodeURIComponent(
-          "New Project Inquiry - TRIAD"
-        );
+        const subject = encodeURIComponent("New Project Inquiry - TRIAD");
         const body = encodeURIComponent(`
 New project inquiry details:
 
@@ -225,10 +226,12 @@ TRIAD Contact Form
         setSubmitMessage(
           "Email client opened! Please send the email to complete your inquiry."
         );
+        setSubmitState("success");
       } catch {
         setSubmitMessage(
           "Error sending your message. Please try again or contact us directly."
         );
+        setSubmitState("error");
       }
     } finally {
       setIsSubmitting(false);
@@ -341,6 +344,8 @@ TRIAD Contact Form
               src={`${import.meta.env.BASE_URL}Adobe_Premiere_Pro_CC.webp`}
               alt="Premiere Pro"
               className="w-full h-full object-cover"
+              loading="lazy"
+              decoding="async"
             />
           </motion.div>
 
@@ -363,6 +368,8 @@ TRIAD Contact Form
               src={`${import.meta.env.BASE_URL}Adobe_After_Effects_CC_icon.webp`}
               alt="After Effects"
               className="w-full h-full object-cover"
+              loading="lazy"
+              decoding="async"
             />
           </motion.div>
 
@@ -386,6 +393,8 @@ TRIAD Contact Form
               src={`${import.meta.env.BASE_URL}DaVinci-Resolve.webp`}
               alt="DaVinci Resolve"
               className="w-full h-full object-cover"
+              loading="lazy"
+              decoding="async"
             />
           </motion.div>
 
@@ -409,6 +418,8 @@ TRIAD Contact Form
               src={`${import.meta.env.BASE_URL}Apple-Motion-logo.webp`}
               alt="Apple Motion"
               className="w-full h-full object-cover"
+              loading="lazy"
+              decoding="async"
             />
           </motion.div>
 
@@ -546,13 +557,13 @@ TRIAD Contact Form
       <section className="relative py-20 px-4 sm:px-6 lg:px-8 overflow-hidden text-center">
         {/* Background Video */}
         <video
-          ref={hireBgRef}
+          ref={portfolioBgRef}
           className="absolute inset-0 w-full h-full object-cover pointer-events-none select-none"
           autoPlay
           muted
           loop
           playsInline
-          preload="auto"
+          preload="metadata"
         >
           <source
             src={`${import.meta.env.BASE_URL}background.webm`}
@@ -624,6 +635,8 @@ TRIAD Contact Form
                             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                             allowFullScreen
                             className="rounded-lg w-full"
+                            loading="lazy"
+                            referrerPolicy="strict-origin-when-cross-origin"
                           ></iframe>
                         ) : "driveUrl" in v && v.driveUrl ? (
                           <video
@@ -631,9 +644,10 @@ TRIAD Contact Form
                             height="220"
                             controls
                             className="rounded-lg w-full"
+                            preload="metadata"
                           >
-                            {typeof v.driveUrl === "string" && v.driveUrl && (
-                              <source src={v.driveUrl} type="video/mp4" />
+                            {typeof (v as any).driveUrl === "string" && (v as any).driveUrl && (
+                              <source src={(v as any).driveUrl} type="video/mp4" />
                             )}
                             Your browser does not support the video tag.
                           </video>
@@ -674,7 +688,7 @@ TRIAD Contact Form
           muted
           loop
           playsInline
-          preload="auto"
+          preload="metadata"
         >
           <source
             src={`${import.meta.env.BASE_URL}background.webm`}
@@ -772,7 +786,7 @@ TRIAD Contact Form
           muted
           loop
           playsInline
-          preload="auto"
+          preload="metadata"
         >
           <source
             src={`${import.meta.env.BASE_URL}background.webm`}
@@ -801,6 +815,8 @@ TRIAD Contact Form
               src={`${import.meta.env.BASE_URL}Adobe_Premiere_Pro_CC.webp`}
               alt="Premiere Pro"
               className="w-full h-full object-cover"
+              loading="lazy"
+              decoding="async"
             />
           </motion.div>
 
@@ -816,6 +832,8 @@ TRIAD Contact Form
               src={`${import.meta.env.BASE_URL}Adobe_After_Effects_CC_icon.webp`}
               alt="After Effects"
               className="w-full h-full object-cover"
+              loading="lazy"
+              decoding="async"
             />
           </motion.div>
 
@@ -835,6 +853,8 @@ TRIAD Contact Form
               src={`${import.meta.env.BASE_URL}DaVinci-Resolve.webp`}
               alt="DaVinci Resolve"
               className="w-full h-full object-cover"
+              loading="lazy"
+              decoding="async"
             />
           </motion.div>
 
@@ -854,6 +874,8 @@ TRIAD Contact Form
               src={`${import.meta.env.BASE_URL}Apple-Motion-logo.webp`}
               alt="Apple Motion"
               className="w-full h-full object-cover"
+              loading="lazy"
+              decoding="async"
             />
           </motion.div>
         </div>
@@ -1005,7 +1027,9 @@ TRIAD Contact Form
                 <motion.div
                   initial={{ opacity: 0, y: 10 }}
                   animate={{ opacity: 1, y: 0 }}
-                  className="text-center text-green-400 text-sm"
+                  className={`text-center text-sm ${
+                    submitState === "error" ? "text-red-400" : "text-green-400"
+                  }`}
                 >
                   {submitMessage}
                 </motion.div>
@@ -1030,7 +1054,13 @@ TRIAD Contact Form
                     whileTap={{ scale: 0.95 }}
                   >
                     <div className="w-12 h-12 bg-gradient-to-br from-purple-500 via-pink-500 to-orange-400 rounded-xl flex items-center justify-center group-hover:shadow-lg group-hover:shadow-pink-500/25 transition-all duration-300">
-                      <img src="/download.png" alt="Instagram" className="w-8 h-8" />
+                      <img
+                        src={`${import.meta.env.BASE_URL}download.png`}
+                        alt="Instagram"
+                        className="w-8 h-8"
+                        loading="lazy"
+                        decoding="async"
+                      />
                     </div>
                   </motion.a>
 
@@ -1043,7 +1073,13 @@ TRIAD Contact Form
                     whileTap={{ scale: 0.95 }}
                   >
                     <div className="w-12 h-12 bg-indigo-600 rounded-xl flex items-center justify-center group-hover:shadow-lg group-hover:shadow-indigo-500/25 transition-all duration-300">
-                      <img src="/download.jpeg" alt="Discord" className="w-8 h-8" />
+                      <img
+                        src={`${import.meta.env.BASE_URL}download.jpeg`}
+                        alt="Discord"
+                        className="w-8 h-8"
+                        loading="lazy"
+                        decoding="async"
+                      />
                     </div>
                   </motion.a>
 
@@ -1054,12 +1090,18 @@ TRIAD Contact Form
                     whileTap={{ scale: 0.95 }}
                   >
                     <div className="w-12 h-12 bg-gradient-to-r from-red-500 via-yellow-500 to-green-500 rounded-xl flex items-center justify-center group-hover:shadow-lg group-hover:shadow-red-500/25 transition-all duration-300">
-                      <img src="/download (1).png" alt="Gmail" className="w-8 h-8" />
+                      <img
+                        src={`${import.meta.env.BASE_URL}download (1).png`}
+                        alt="Gmail"
+                        className="w-8 h-8"
+                        loading="lazy"
+                        decoding="async"
+                      />
                     </div>
                   </motion.a>
 
                   <motion.a
-                    href="https://wa.me/1234567890"
+                    href={WHATSAPP_LINK}
                     target="_blank"
                     rel="noopener noreferrer"
                     className="group"
@@ -1067,7 +1109,13 @@ TRIAD Contact Form
                     whileTap={{ scale: 0.95 }}
                   >
                     <div className="w-12 h-12 bg-green-500 rounded-xl flex items-center justify-center group-hover:shadow-lg group-hover:shadow-green-500/25 transition-all duration-300">
-                      <img src="/download (2).png" alt="WhatsApp" className="w-8 h-8" />
+                      <img
+                        src={`${import.meta.env.BASE_URL}download (2).png`}
+                        alt="WhatsApp"
+                        className="w-8 h-8"
+                        loading="lazy"
+                        decoding="async"
+                      />
                     </div>
                   </motion.a>
                 </div>
@@ -1108,25 +1156,26 @@ TRIAD Contact Form
             <div className="flex items-center gap-6 rounded-full px-5 py-2">
               <button
                 onClick={() => setCurrentPage("home")}
-                className={`text-gray-300 hover:text-white px-2 py-1 transition-all duration-300 ${currentPage === "home" ? "text-white" : ""
-                  }`}
+                className={`text-gray-300 hover:text-white px-2 py-1 transition-all duration-300 ${
+                  currentPage === "home" ? "text-white" : ""
+                }`}
               >
                 Home
               </button>
               <button
                 onClick={() => setCurrentPage("portfolio")}
-                className={`text-gray-300 hover:text-white px-2 py-1 transition-all duration-300 ${currentPage === "portfolio" ? "text-white" : ""
-                  }`}
+                className={`text-gray-300 hover:text-white px-2 py-1 transition-all duration-300 ${
+                  currentPage === "portfolio" ? "text-white" : ""
+                }`}
               >
                 Portfolio
               </button>
 
-
-
               <button
                 onClick={() => setCurrentPage("about")}
-                className={`text-gray-300 hover:text-white px-2 py-1 transition-all duration-300 ${currentPage === "about" ? "text-white" : ""
-                  }`}
+                className={`text-gray-300 hover:text-white px-2 py-1 transition-all duration-300 ${
+                  currentPage === "about" ? "text-white" : ""
+                }`}
               >
                 About
               </button>
@@ -1159,8 +1208,9 @@ TRIAD Contact Form
                 setCurrentPage("home");
                 setIsMenuOpen(false);
               }}
-              className={`block w-full text-left px-3 py-2 rounded-lg hover:bg-white/10 ${currentPage === "home" ? "text-white" : "text-gray-300"
-                }`}
+              className={`block w-full text-left px-3 py-2 rounded-lg hover:bg-white/10 ${
+                currentPage === "home" ? "text-white" : "text-gray-300"
+              }`}
             >
               Home
             </button>
@@ -1169,8 +1219,9 @@ TRIAD Contact Form
                 setCurrentPage("portfolio");
                 setIsMenuOpen(false);
               }}
-              className={`block w-full text-left px-3 py-2 rounded-lg hover:bg-white/10 ${currentPage === "portfolio" ? "text-white" : "text-gray-300"
-                }`}
+              className={`block w-full text-left px-3 py-2 rounded-lg hover:bg-white/10 ${
+                currentPage === "portfolio" ? "text-white" : "text-gray-300"
+              }`}
             >
               Portfolio
             </button>
@@ -1180,8 +1231,9 @@ TRIAD Contact Form
                 setCurrentPage("about");
                 setIsMenuOpen(false);
               }}
-              className={`block w-full text-left px-3 py-2 rounded-lg hover:bg-white/10 ${currentPage === "about" ? "text-white" : "text-gray-300"
-                }`}
+              className={`block w-full text-left px-3 py-2 rounded-lg hover:bg-white/10 ${
+                currentPage === "about" ? "text-white" : "text-gray-300"
+              }`}
             >
               About
             </button>
